@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Order Log</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #adb5bd;
+            margin-bottom: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #dc3545;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        .order-form textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Designer Dashboard</h2>
+    <a href="designer_announcements.html">Announcements</a>
+    <a href="designer_order_log.html">Order Log</a>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<div class="main-content">
+    <h1>Order Log</h1>
+    <form id="orderForm" class="order-form" onsubmit="return handleOrderSubmit(event)">
+        <div>
+            <label for="orderDetails">Order Details:</label>
+            <textarea id="orderDetails" rows="4" required></textarea>
+        </div>
+        <button type="submit">Add Order</button>
+    </form>
+</div>
+
+<script>
+    function handleOrderSubmit(event) {
+        event.preventDefault();
+        const orderDetails = document.getElementById('orderDetails').value;
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push({ details: orderDetails });
+        localStorage.setItem('orders', JSON.stringify(orders));
+        document.getElementById('orderForm').reset();
+    }
+
+    function logout() {
+        window.location.href = 'index.html';
+    }
+</script>
+
+</body>
+</html>
