@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Order Log</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #adb5bd;
+            margin-bottom: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #dc3545;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .log-table th, .log-table td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: left;
+        }
+        .log-table th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Dashboard</h2>
+    <a href="admin_post_announcements.html">Post Announcements</a>
+    <a href="admin_order_log.html">Order Log</a>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<div class="main-content">
+    <h1>Order Log</h1>
+    <table class="log-table" id="orderLogTable">
+        <thead>
+            <tr>
+                <th>Order Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Order logs will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function logout() {
+        window.location.href = 'index.html';
+    }
+
+    function displayOrders() {
+        const tableBody = document.querySelector('#orderLogTable tbody');
+        tableBody.innerHTML = '';
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.forEach(order => {
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.textContent = order.details;
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Initialize the order log display
+    displayOrders();
+</script>
+
+</body>
+</html>
