@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .sidebar h2 {
+            margin: 0;
+            padding: 0;
+            font-size: 1.5em;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #adb5bd;
+            margin-bottom: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #dc3545;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Dashboard</h2>
+    <a href="admin_post_announcements.html">Post Announcements</a>
+    <a href="admin_order_log.html">Order Log</a>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<div class="main-content">
+    <h1>Welcome, Admin!</h1>
+    <p>Select an option from the sidebar.</p>
+</div>
+
+<script>
+    function logout() {
+        window.location.href = 'index.html';
+    }
+</script>
+
+</body>
+</html>
