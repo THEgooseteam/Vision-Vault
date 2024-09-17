@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Announcements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #adb5bd;
+            margin-bottom: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #dc3545;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        .announcement-form textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .announcement-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .announcement-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+        .announcement-list button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .announcement-list button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Dashboard</h2>
+    <a href="admin_post_announcements.html">Post Announcements</a>
+    <a href="admin_order_log.html">Order Log</a>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<div class="main-content">
+    <h1>Post Announcements</h1>
+    <form id="announcementForm" class="announcement-form" onsubmit="return handleAnnouncementSubmit(event)">
+        <div>
+            <label for="announcementDetails">Announcement:</label>
+            <textarea id="announcementDetails" rows="4" required></textarea>
+        </div>
+        <button type="submit">Post Announcement</button>
+    </form>
+    <ul id="announcementList" class="announcement-list">
+        <!-- Announcements will be dynamically added here -->
+    </ul>
+</div>
+
+<script>
+    function logout() {
+        window.location.href = 'index.html';
+    }
+
+    function handleAnnouncementSubmit(event) {
+        event.preventDefault();
+        const announcementDetails = document.getElementById('announcementDetails').value;
+        const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+        announcements.push({ details: announcementDetails });
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+        displayAnnouncements();
+        document.getElementById('announcementForm').reset();
+    }
+
+    function displayAnnouncements() {
+        const list = document.getElementById('announcementList');
+        list.innerHTML = '';
+        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+        announcements.forEach((announcement, index) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = announcement.details;
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = () => deleteAnnouncement(index);
+            listItem.appendChild(deleteButton);
+            list.appendChild(listItem);
+        });
+    }
+
+    function deleteAnnouncement(index) {
+        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+        announcements.splice(index, 1);
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+        displayAnnouncements();
+    }
+
+    // Initialize the announcements display
+    displayAnnouncements();
+</script>
+
+</body>
+</html>
